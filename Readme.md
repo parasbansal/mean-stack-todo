@@ -36,7 +36,7 @@ $ ng serve
 
 ## App Info
 
-You can create a simple To-do list to manage your tasks. The application is still under development. There will be some changes with new features soon.
+You can create a simple To-do list to manage your tasks. The application is still under development. There will be some changes with new features soon. (And there will be images of the project too)
 
 ### Author
 
