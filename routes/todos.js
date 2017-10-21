@@ -43,6 +43,41 @@ router.get('/', (req, res, next) => {
 	});
 });
 
+// Set Completed
+router.put('/complete/:id', (req, res, next) => {
+	Todo.setCompleted(req.params.id, (err, data) => {
+		if (err) {
+			res.json({
+				status: false,
+				message: 'There was some error. ' + err
+			});
+		} else {
+			res.json({
+				status: true,
+				data: data
+			});
+		}
+	});
+});
+
+// Edit
+router.put('/:id', (req, res, next) => {
+	Todo.edit(req.params.id, req.body.newItem, (err, data) => {
+		if (err) {
+			res.json({
+				status: false,
+				message: 'There was some error. ' + err
+			});
+		} else {
+			res.json({
+				status: true,
+				data: data
+			});
+		}
+	});
+});
+
+
 // Delete
 router.delete('/:id', (req, res, next) => {
 	Todo.delete(req.params.id, (err, data) => {

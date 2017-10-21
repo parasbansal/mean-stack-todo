@@ -9,7 +9,8 @@ import izitoast from 'izitoast';
 })
 export class AppComponent implements OnInit {
 
-  items: Object[];
+  completedItems: Object[];
+  incompleteItems: Object[];
 
   newItem: String;
 
@@ -24,13 +25,14 @@ export class AppComponent implements OnInit {
   getAllTasks() {
     this.todoService.getAll().subscribe(data => {
       if (data.status) {
-        this.items = data.data;
-      } else {
-        izitoast.error({
-          title: 'Error',
-          message: 'Something went wrong!',
-          position: 'topCenter'
+        this.incompleteItems = data.data.filter(function (el) {
+          return el.completed === false;
         });
+        this.completedItems = data.data.filter(function (el) {
+          return el.completed === true;
+        });
+      } else {
+        this.showErrorMsg();
       }
     });
   }
@@ -42,47 +44,80 @@ export class AppComponent implements OnInit {
 
     this.todoService.add(newItem).subscribe(data => {
       if (data.status) {
-        izitoast.success({
-          title: 'Saved!',
-          message: 'Your new task is saved!',
-          position: 'topCenter'
-        });
+        this.showSuccessMsg('Saved!', 'Your new task is saved!');
         this.newItem = '';
         this.getAllTasks();
       } else {
-        izitoast.error({
-          title: 'Error',
-          message: 'Something went wrong!',
-          position: 'topCenter'
-        });
+        this.showErrorMsg();
       }
     });
 
   }
 
-  deleteItem(task) {
-    this.todoService.delete(task._id).subscribe(data => {
+  setItemCompleted(item) {
+    this.todoService.setCompleted(item._id).subscribe(data => {
       if (data.status) {
-        izitoast.success({
-          title: 'Removed!',
-          message: 'Your task is removed!',
-          position: 'topCenter'
-        });
+        this.showSuccessMsg('Done!', 'Your task is marked as done!');
+        this.getAllTasks();
+      } else {
+        this.showErrorMsg();
+      }
+    });
+  }
 
-        const index = this.items.indexOf(task);
+  editItem(item) {
+    this.todoService.edit(item._id, { newItem: item }).subscribe(data => {
+      console.log(data);
+      if (data.status) {
+        this.showSuccessMsg('Editied!', 'Task edited!');
+      } else {
+        this.showErrorMsg();
+      }
+    });
+  }
+
+  deleteItem(item, completed) {
+    this.todoService.delete(item._id).subscribe(data => {
+      if (data.status) {
+        this.showSuccessMsg('Removed!', 'Your task is removed!');
+
+        let index = -1;
+        if (completed) {
+          index = this.completedItems.indexOf(item);
+        } else {
+          index = this.incompleteItems.indexOf(item);
+        }
 
         if (index > -1) {
-          this.items.splice(index, 1);
+          if (completed) {
+            this.completedItems.splice(index, 1);
+          } else {
+            this.incompleteItems.splice(index, 1);
+          }
         }
 
       } else {
-        izitoast.error({
-          title: 'Error',
-          message: 'Something went wrong!',
-          position: 'topCenter'
-        });
+        this.showErrorMsg();
       }
+    });
+  }
+
+
+  showErrorMsg() {
+    izitoast.error({
+      title: 'Error',
+      message: 'Something went wrong!',
+      position: 'topCenter'
+    });
+  }
+
+  showSuccessMsg(title, msg) {
+    izitoast.success({
+      title: title,
+      message: msg,
+      position: 'topCenter'
     });
   }
 
 }
+

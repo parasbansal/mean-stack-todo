@@ -23,6 +23,18 @@ export class TodoService {
     return this.http.post(this.rootUrl + '/todos', newItem, { headers: headers }).map(res => res.json());
   }
 
+  edit(id, newItem) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put(this.rootUrl + '/todos/' + id, newItem, { headers: headers }).map(res => res.json());
+  }
+
+  setCompleted(id) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put(this.rootUrl + '/todos/complete/' + id, { headers: headers }).map(res => res.json());
+  }
+
   delete(id) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

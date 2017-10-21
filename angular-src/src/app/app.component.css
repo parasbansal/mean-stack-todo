@@ -2,7 +2,7 @@
 	margin-top: 50px;
 	min-height: 500px;
 	background: #fff;
-	box-shadow: 0 1px 4px #ccc;
+	box-shadow: 0 1px 10px 1px #bbb;
 }
 .main-block h1{
 	text-align: center;
@@ -20,18 +20,49 @@
 	border-bottom: 1px solid #ccc;
 }
 
+.incomplete-item-list{
+	color: #555;
+}
+
 .item-block{
 	display: block;
-	padding: 10px 15px;
-}
-.done{
-	color: #ccc;
-	text-decoration: line-through;
+	padding: 5px 15px;
+	border-bottom: 1px solid #ddd;
+	line-height: 30px;
 }
 .right-btns button{
 	margin-left: 5px;
-	border-radius: 50%;
-	background: #eee;
+	background: #f3f3f3;
 	color: #666;
 	outline: none;
+	transition: all .5s;
 }
+.right-btns button:hover{
+	background: #eee;
+	box-shadow: 0 1px 3px #ddd inset;
+}
+.completed-item-list{
+	margin-top: 20px;
+}
+.done{
+	color: #aaa;
+	text-decoration: line-through;
+}
+.sub-heading{
+	padding-left: 15px;
+	padding-bottom: 5px;
+	color: #555;
+	border-bottom: 1px solid #ccc;
+	font-size: 16px;
+}
+
+.task-input{
+	border: none;
+	width: 100%;
+	outline: none;
+}
+
+
+
+
+

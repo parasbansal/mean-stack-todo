@@ -8,22 +8,48 @@
 
           <div class="new-item-block">
             <form (submit)="addNewItem()">
-              <input type="text" class="new-item-input" name="newItem" [(ngModel)]="newItem" placeholder="New Task" autocomplete="off"
+              <input type="text" class="new-item-input" name="newItem" [(ngModel)]="newItem" placeholder="New Task..." autocomplete="off"
                 autofocus>
             </form>
           </div>
 
-          <div class="items-block" *ngIf="items">
-            <div class="item-block" *ngFor="let item of items" [ngClass]="{'done': item.compeleted}">
-              <span class="pull-right right-btns">
-                <button class="btn btn-sm">
-                  <i class="fa fa-check"></i>
-                </button>
-                <button class="btn btn-sm" (click)="deleteItem(item)">
-                  <i class="fa fa-times"></i>
-                </button>
-              </span>
-              <span>{{ item.item }}</span>
+          <div class="items-block incomplete-item-list" *ngIf="incompleteItems">
+            <div class="item-block" *ngFor="let item of incompleteItems">
+              <div class="row">
+                <div class="col-sm-10 col-md-9">
+                  <div>
+                    <input type="text" [(ngModel)]="item.item" class="task-input" (blur)="editItem(item)">
+                  </div>
+                </div>
+                <div class="col-sm-2 col-md-3">
+                  <span class="right-btns">
+                    <button class="btn btn-sm" (click)="setItemCompleted(item)">
+                      <i class="fa fa-check"></i>
+                    </button>
+                    <button class="btn btn-sm" (click)="deleteItem(item, false)">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="items-block completed-item-list" *ngIf="completedItems">
+            <div class="sub-heading">Completed Tasks</div>
+            <div class="item-block" *ngFor="let item of completedItems">
+              <div class="row">
+                <div class="col-sm-10 col-md-10 done">
+                  <span>{{ item.item }}</span>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                  <span class="right-btns">
+                    <button class="btn btn-sm" (click)="deleteItem(item, true)">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
