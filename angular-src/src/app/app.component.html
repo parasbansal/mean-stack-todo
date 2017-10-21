@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <div class="main-block">
+        <h1>Todo List</h1>
+
+        <div class="content-block">
+
+          <div class="new-item-block">
+            <form (submit)="addNewItem()">
+              <input type="text" class="new-item-input" name="newItem" [(ngModel)]="newItem" placeholder="New Task" autocomplete="off"
+                autofocus>
+            </form>
+          </div>
+
+          <div class="items-block" *ngIf="items">
+            <div class="item-block" *ngFor="let item of items" [ngClass]="{'done': item.compeleted}">
+              <span class="pull-right right-btns">
+                <button class="btn btn-sm">
+                  <i class="fa fa-check"></i>
+                </button>
+                <button class="btn btn-sm" (click)="deleteItem(item)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </span>
+              <span>{{ item.item }}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
