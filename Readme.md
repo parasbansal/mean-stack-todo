@@ -43,7 +43,6 @@ You can create a simple To-do list to manage your tasks with good UI/UX design. 
 
 ### Author
 
-Paras Bansal
 [Paras Bansal](http://www.parasbansal.com)
 
 ### License
